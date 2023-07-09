@@ -8,11 +8,11 @@ module.exports = {
   development: {
     client: 'pg',
     connection: { 
-      host: 'localhost',
+      host: 'ep-frosty-term-438476-pooler.us-east-1.postgres.vercel-storage.com',
       port: '5432',
-      database: 'postgres',
-      user:     'postgres',
-      password: '55824655'
+      database: 'verceldb',
+      user:     'default',
+      password: '7yZGPuV5LXzR'
     }
   },
 
