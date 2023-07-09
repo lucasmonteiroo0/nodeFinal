@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Login</title>
+  <style>
+    /* Estilos CSS para o formulário de login */
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 300px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    .form-group button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .form-group button:hover {
+      background-color: #45a049;
+    }
+
+    .form-group .register-link {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .error-message {
+      word-wrap: break-word;
+      background-color: yellow;
+      padding: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <div id="error-message" class="error-message"></div>
+    <form id="login-form" action="/login" method="POST">
+      <div class="form-group">
+        <label for="login">Usuário:</label>
+        <input type="text" id="login" name="login" placeholder="Digite seu nome de usuário">
+      </div>
+      <div class="form-group">
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" placeholder="Digite sua senha">
+      </div>
+      <div class="form-group">
+        <button type="submit" id="login-btn">Entrar</button>
+      </div>
+      <div class="form-group register-link">
+        <a href="/register">Criar conta (Registrar)</a>
+      </div>
+    </form>
+    <div id="success-message" class="success-message"></div>
+  </div>
+
+  <script>
+    // Código JavaScript para exibir mensagens de erro e sucesso
+    const loginForm = document.getElementById('login-form');
+    const errorMessage = document.getElementById('error-message');
+    const successMessage = document.getElementById('success-message');
+
+    loginForm.addEventListener('submit', (event) => {
+      event.preventDefault(); // Impede o envio do formulário por padrão
+
+      const loginInput = document.getElementById('login');
+      const senhaInput = document.getElementById('senha');
+      const login = loginInput.value;
+      const senha = senhaInput.value;
+
+      console.log('login:', login); // Exibe o valor do login no console
+      console.log('senha:', senha); // Exibe o valor da senha no console
+
+
+      errorMessage.textContent = ''; // Limpar a mensagem de erro
+      successMessage.textContent = ''; // Limpar a mensagem de sucesso
+
+
+      // Enviar os dados de autenticação para o servidor
+      fetch('/login/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ login, senha })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            successMessage.textContent = 'Login correto!'; // Exibir a mensagem de sucesso
+          } else {
+            errorMessage.textContent = data.message; // Exibir mensagem de erro retornada pelo servidor
+          }
+        })
+        .catch(error => {
+          errorMessage.textContent = 'Erro ao enviar a solicitação'; // Exibir mensagem de erro genérica
+          console.error(error);
+        });
+    });
+
+  </script> 
+</body>
+
+</html>
