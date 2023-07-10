@@ -12,9 +12,12 @@ const app = express(); // Inicializa um objeto de aplicação Express
 
 app.use(morgan('common'));
 
-app.use(express.static('public'));
+app.use('/site', express.static('public'));
 
 //app.use ('/site', express.static('public'))
+app.get('/', (req, res) => {
+    res.redirect('/site');
+});
 
 app.get('/', (req, res) => {
     res.redirect('/site');
